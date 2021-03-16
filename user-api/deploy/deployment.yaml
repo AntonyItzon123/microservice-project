@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-node-with-proxy-app
+  labels:
+    app: simple-node-with-proxy-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-node-with-proxy-app
+  template:
+    metadata:
+      labels:
+        app: simple-node-with-proxy-app
+    spec:
+      containers:
+      - name: simple-node-with-proxy
+        image: antonychinval/simple-node-with-proxy
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
