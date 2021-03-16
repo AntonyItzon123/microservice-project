@@ -1,16 +1,16 @@
 if (process.env.NODE_ENV !== 'production') { require('dotenv').config() }
-import {UserRouter} from './controllers/user.router';
 import express , { Request, Response } from "express";
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import {sequelize} from './sequelize';
-import { V0_USER_MODELS} from './models/model.index';
+import { V0_FEED_MODELS} from './models/model.index';
 import {config} from './config/config';
+import {FeedRouter} from './controllers/feed.router'
 
 (async () => {
 
   console.log("Starting server")
-  await sequelize.addModels(V0_USER_MODELS);
+  await sequelize.addModels(V0_FEED_MODELS);
   await sequelize.sync();
   console.log("Db Up")
   const app = express();
@@ -28,11 +28,11 @@ import {config} from './config/config';
     origin: config.url,
   }));
 
-  app.use('/v0', UserRouter);
+  app.use('/v0', FeedRouter);
 
-  app.get( "/", async ( req, res ) => { res.send("V0 User Api") });
+  app.get( "/", async ( req, res ) => { res.send("V0 Feed Api") });
 
-  app.get("/health", (req : Request, res : Response) => { res.status(200).send("Hello! User Api") });
+  app.get("/health", (req : Request, res : Response) => { res.status(200).send("Hello! Feed Api") });
 
   // Start the Server
   app.listen( port, () => {

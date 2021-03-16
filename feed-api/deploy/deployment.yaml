@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-api-app
+  name: feed-api-app
   labels:
-    app: user-api-app
+    app: feed-api-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-api-app
+      app: feed-api-app
   template:
     metadata:
       labels:
-        app: user-api-app
+        app: feed-api-app
     spec:
       containers:
-      - name: user-api
-        image: antonychinval/user-api
+      - name: feed-api
+        image: antonychinval/feed-api
         ports:
         - containerPort: 8080
         livenessProbe:
